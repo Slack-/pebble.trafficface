@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "Slack",
+    "longName": "Slack TrafficFace",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "Slack TrafficFace",
+    "uuid": "6abf2994-3394-4ab5-816b-444edcd0380e",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
