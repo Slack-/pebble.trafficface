@@ -7,7 +7,23 @@
     "longName": "Slack TrafficFace",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/battery.png",
+                "name": "IMAGE_BATTERY",
+                "type": "png"
+            },
+            {
+                "file": "images/charging.png",
+                "name": "IMAGE_CHARGING",
+                "type": "png"
+            },
+            {
+                "file": "images/bluetooth.png",
+                "name": "IMAGE_BLUETOOTH",
+                "type": "png"
+            }
+        ]
     },
     "shortName": "Slack TrafficFace",
     "uuid": "6abf2994-3394-4ab5-816b-444edcd0380e",
