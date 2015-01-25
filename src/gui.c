@@ -1,8 +1,6 @@
 #include "gui.h"
 #include <pebble.h>
 
-#define DATE_BUFFER_LENGTH 12
-
 /* Graphics state management */
 static uint8_t su8_battery_level_width;
     
@@ -16,14 +14,12 @@ static Window *s_window;
 static GBitmap *s_res_image_battery;
 static GBitmap *s_res_image_charging;
 static GBitmap *s_res_image_bluetooth;
-static GFont s_res_roboto_bold_subset_49;
-static GFont s_res_gothic_24;
+static GFont s_res_gothic_14;
 static BitmapLayer *st_battery_shell_layer;
 static Layer *st_battery_level_layer;
 static BitmapLayer *st_battery_charging_layer;
 static BitmapLayer *st_bluetooth_connected_layer;
 static TextLayer *st_time_layer;
-static TextLayer *st_date_layer;
 
 static void initialise_ui(void) {
   s_window = window_create();
@@ -33,8 +29,7 @@ static void initialise_ui(void) {
   s_res_image_battery = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BATTERY);
   s_res_image_charging = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_CHARGING);
   s_res_image_bluetooth = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH);
-  s_res_roboto_bold_subset_49 = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
-  s_res_gothic_24 = fonts_get_system_font(FONT_KEY_GOTHIC_24);
+  s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
   // st_battery_shell_layer
   st_battery_shell_layer = bitmap_layer_create(GRect(126, 4, 15, 8));
   bitmap_layer_set_bitmap(st_battery_shell_layer, s_res_image_battery);
@@ -55,22 +50,13 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)st_bluetooth_connected_layer);
   
   // st_time_layer
-  st_time_layer = text_layer_create(GRect(0, 46, 144, 50));
-  text_layer_set_background_color(st_time_layer, GColorBlack);
+  st_time_layer = text_layer_create(GRect(0, 0, 146, 14));
+  text_layer_set_background_color(st_time_layer, GColorClear);
   text_layer_set_text_color(st_time_layer, GColorWhite);
   text_layer_set_text(st_time_layer, "00:00");
   text_layer_set_text_alignment(st_time_layer, GTextAlignmentCenter);
-  text_layer_set_font(st_time_layer, s_res_roboto_bold_subset_49);
+  text_layer_set_font(st_time_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)st_time_layer);
-  
-  // st_date_layer
-  st_date_layer = text_layer_create(GRect(0, 96, 144, 30));
-  text_layer_set_background_color(st_date_layer, GColorBlack);
-  text_layer_set_text_color(st_date_layer, GColorWhite);
-  text_layer_set_text(st_date_layer, "January 1");
-  text_layer_set_text_alignment(st_date_layer, GTextAlignmentCenter);
-  text_layer_set_font(st_date_layer, s_res_gothic_24);
-  layer_add_child(window_get_root_layer(s_window), (Layer *)st_date_layer);
 }
 
 static void destroy_ui(void) {
@@ -80,7 +66,6 @@ static void destroy_ui(void) {
   bitmap_layer_destroy(st_battery_charging_layer);
   bitmap_layer_destroy(st_bluetooth_connected_layer);
   text_layer_destroy(st_time_layer);
-  text_layer_destroy(st_date_layer);
   gbitmap_destroy(s_res_image_battery);
   gbitmap_destroy(s_res_image_charging);
   gbitmap_destroy(s_res_image_bluetooth);
@@ -108,7 +93,6 @@ void gui_init(void)
     
     /* Show the current time and date */
     gui_update_time();
-    gui_update_date();
 }
 
 /* 
@@ -170,25 +154,6 @@ void gui_update_time(void)
 
     /* Display this time on the text layer */
 	text_layer_set_text(st_time_layer, ac_buffer);
-}
-
-/* 
-** Updates the date on the GUI. 
-*/
-void gui_update_date(void)
-{
-    /* Get a time structure */
-    time_t temp = time(NULL); 
-	struct tm *t_current_time = localtime(&temp);
-    
-    /* Create a long-lived buffer for displaying the date */
-	static char ac_buffer[DATE_BUFFER_LENGTH];
-
-    /* Write the current month and day of the month into the buffer */
-	strftime(ac_buffer, DATE_BUFFER_LENGTH, "%B %e", t_current_time);
-
-    /* Display this date on the text layer */
-	text_layer_set_text(st_date_layer, ac_buffer);
 }
 
 /**************************** Private functions *****************************/

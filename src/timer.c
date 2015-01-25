@@ -35,10 +35,4 @@ static void tick_timer_handler(struct tm *t_tick_time, TimeUnits t_units_changed
 {
     /* Refresh the time on the GUI */
     gui_update_time();
-    
-    /* Refresh the date on the GUI every day */
-    if (t_units_changed & DAY_UNIT)
-    {
-        gui_update_date();
-    }
 }

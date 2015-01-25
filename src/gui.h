@@ -33,8 +33,3 @@ void gui_update_connection_status(bool b_is_connected);
 ** Updates the time on the GUI. 
 */
 void gui_update_time(void);
-
-/* 
-** Updates the date on the GUI. 
-*/
-void gui_update_date(void);
