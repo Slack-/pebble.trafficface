@@ -15,11 +15,14 @@ static GBitmap *s_res_image_battery;
 static GBitmap *s_res_image_charging;
 static GBitmap *s_res_image_bluetooth;
 static GFont s_res_gothic_14;
+static GFont s_res_gothic_18;
 static BitmapLayer *st_battery_shell_layer;
 static Layer *st_battery_level_layer;
 static BitmapLayer *st_battery_charging_layer;
 static BitmapLayer *st_bluetooth_connected_layer;
 static TextLayer *st_time_layer;
+static TextLayer *st_headings_layer;
+static TextLayer *st_data_layer;
 
 static void initialise_ui(void) {
   s_window = window_create();
@@ -30,6 +33,7 @@ static void initialise_ui(void) {
   s_res_image_charging = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_CHARGING);
   s_res_image_bluetooth = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH);
   s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
+  s_res_gothic_18 = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   // st_battery_shell_layer
   st_battery_shell_layer = bitmap_layer_create(GRect(126, 4, 15, 8));
   bitmap_layer_set_bitmap(st_battery_shell_layer, s_res_image_battery);
@@ -57,6 +61,21 @@ static void initialise_ui(void) {
   text_layer_set_text_alignment(st_time_layer, GTextAlignmentCenter);
   text_layer_set_font(st_time_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)st_time_layer);
+  
+  // st_headings_layer
+  st_headings_layer = text_layer_create(GRect(4, 16, 136, 14));
+  text_layer_set_background_color(st_headings_layer, GColorBlack);
+  text_layer_set_text_color(st_headings_layer, GColorWhite);
+  text_layer_set_text(st_headings_layer, "Motorway");
+  layer_add_child(window_get_root_layer(s_window), (Layer *)st_headings_layer);
+  
+  // st_data_layer
+  st_data_layer = text_layer_create(GRect(4, 30, 136, 134));
+  text_layer_set_background_color(st_data_layer, GColorBlack);
+  text_layer_set_text_color(st_data_layer, GColorWhite);
+  text_layer_set_text(st_data_layer, "Data");
+  text_layer_set_font(st_data_layer, s_res_gothic_18);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)st_data_layer);
 }
 
 static void destroy_ui(void) {
@@ -66,6 +85,8 @@ static void destroy_ui(void) {
   bitmap_layer_destroy(st_battery_charging_layer);
   bitmap_layer_destroy(st_bluetooth_connected_layer);
   text_layer_destroy(st_time_layer);
+  text_layer_destroy(st_headings_layer);
+  text_layer_destroy(st_data_layer);
   gbitmap_destroy(s_res_image_battery);
   gbitmap_destroy(s_res_image_charging);
   gbitmap_destroy(s_res_image_bluetooth);
